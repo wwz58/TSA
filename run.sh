@@ -1,0 +1,1 @@
+python train.py run --dataset=laptop --model_name=lstm --debug=False --num_epoch=10 --train_batch_size=32 --test_batch_size=64 --print_every=10

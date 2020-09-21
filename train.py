@@ -57,6 +57,7 @@ def run(**kwags):
                       drop_last=False)
 
     model = TSA_LSTM(opt)
+    model = init_weight(model)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
