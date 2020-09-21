@@ -1,4 +1,31 @@
 {
-    "laptop_embedding_path": "",
-    "restaurant_embedding_path": ""
+    "dataset": "laptop",
+    "sent_max_len": 100,
+    "target_max_len": 8,
+    "dataset_fs": {
+        "laptop": {
+            "train": "data/Laptops_Train.xml",
+            "test": "data/Laptops_Test_Gold.xml"
+        },
+        "restaurant": {
+            "train": "data/Restaurants_Train.xml",
+            "test": "data/Restaurants_Test_Gold.xml"
+        }
+    },
+    "debug": true,
+    "model_name": "lstm",
+    "num_epoch": 2,
+    "train_batch_size": 32,
+    "test_batch_size": 32,
+    "embedding_dim": 300,
+    "embedding_drop": 0.2,
+    "lstm_hidden_dim": 100,
+    "fc_drop": 0.2,
+    "num_classes": 3,
+    "label2id": {
+        "negative": 0,
+        "neutral": 1,
+        "positive": 2
+    },
+    "print_every": 1
 }
