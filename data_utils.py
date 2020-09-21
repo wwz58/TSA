@@ -134,6 +134,7 @@ class MyData(Dataset):
                     opt.debug):
                 left_toks = [token for token in nlp(left)]
                 term_toks = [token for token in nlp(term)]
+                right_toks = [token for token in nlp(right)]
                 start = len(left_toks)
                 end = start + len(term_toks)
                 doc = nlp((left + ' ' + term + ' ' + right).strip())
@@ -147,6 +148,14 @@ class MyData(Dataset):
                 padded_adj = np.zeros(
                     (opt.sent_max_len, opt.sent_max_len)).astype('float32')
                 padded_adj[:doc_len, :doc_len] = adj
+
+                left_sent_ids = pad_and_truncate(
+                    [w2i[t.text] for t in left_toks + term_toks],
+                    opt.left_max_len)
+                right_sent_ids = pad_and_truncate(
+                    [w2i[t.text] for t in term_toks + right_toks],
+                    opt.right_max_len)
+
                 sent_ids = pad_and_truncate([w2i[t.text] for t in doc],
                                             opt.sent_max_len)
                 target_ids = pad_and_truncate([w2i[t.text] for t in term_toks],
@@ -158,11 +167,15 @@ class MyData(Dataset):
                                                opt.target_max_len,
                                                dtype='float32')
                 data = {
+                    "left_sent_ids": left_sent_ids,
+                    "right_sent_ids": right_sent_ids,
                     "adj": padded_adj,
                     "sent_ids": sent_ids,
                     "target_ids": target_ids,
                     "sent_mask": sent_mask,
                     "target_mask": target_mask,
+                    "start": start,
+                    "end": end,
                     "polarity": polarity
                 }
                 self.data.append(data)

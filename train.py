@@ -56,10 +56,10 @@ def run(**kwags):
                       shuffle=False,
                       drop_last=False)
 
-    model = TSA_LSTM(opt)
+    model = model_map[opt.model_name](opt)
     model = init_weight(model)
     if not opt.debug:
-        model = model.to('cuda')
+        model = model.to(opt.device)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
@@ -81,8 +81,8 @@ def run(**kwags):
             x = [batch[c] for c in input_cols[opt.model_name]]
             y = batch['polarity']
             if not opt.debug:
-                x = [e.to('cuda') for e in x]
-                y = y.to('cuda')
+                x = [e.to(opt.device) for e in x]
+                y = y.to(opt.device)
             tr_labels += y.tolist()
             predict = model(x)
             tr_preds += predict.max(-1)[1].tolist()

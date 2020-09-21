@@ -27,5 +27,8 @@
         "neutral": 1,
         "positive": 2
     },
-    "print_every": 1
+    "print_every": 1,
+    "device": "cuda:3",
+    "left_max_len": 80,
+    "right_max_len": 80
 }
