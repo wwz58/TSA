@@ -58,6 +58,8 @@ def run(**kwags):
 
     model = TSA_LSTM(opt)
     model = init_weight(model)
+    if not opt.debug:
+        model = model.to('cuda')
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
